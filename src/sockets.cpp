@@ -50,6 +50,8 @@
 #include <grp.h>
 #include <cstring>
 
+#include <iostream>
+
 Fastcgipp::Socket::Socket(
         const socket_t& socket,
         SocketGroup& group,
@@ -293,6 +295,7 @@ bool Fastcgipp::SocketGroup::listen(
 
     m_listeners.insert(fd);
     m_refreshListeners = true;
+    std::cerr << __FILE__ << ":" << __LINE__ << "  Listening on " << address.sun_path << " fd(" << fd << ") " << std::endl ;
     return true;
 }
 
