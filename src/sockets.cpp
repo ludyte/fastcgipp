@@ -224,6 +224,7 @@ bool Fastcgipp::SocketGroup::listen(
         const char* owner,
         const char* group)
 {
+    std::cout << "WTF: Delete an existing socket descriptor- " << name << std::endl ;
     if(std::remove(name) != 0 && errno != ENOENT)
     {
         ERROR_LOG("Unable to delete file \"" << name << "\": " \
@@ -231,6 +232,7 @@ bool Fastcgipp::SocketGroup::listen(
         return false;
     }
 
+    std::cout << "WTF: Create the socket" << std::endl ;
     const auto fd = socket(AF_UNIX, SOCK_STREAM, 0);
     if(fd == -1)
     {
