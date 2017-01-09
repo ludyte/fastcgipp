@@ -246,6 +246,7 @@ bool Fastcgipp::SocketGroup::listen(
     address.sun_family = AF_UNIX;
     std::strncpy(address.sun_path, name, sizeof(address.sun_path) - 1);
 
+    std::cout << "WTF: Bind the socket : " << fd << std::endl ;
     if(bind(
                 fd,
                 reinterpret_cast<struct sockaddr*>(&address),
@@ -257,8 +258,10 @@ bool Fastcgipp::SocketGroup::listen(
         std::remove(name);
         return false;
     }
+    std::cout << "WTF: unlink " << name << std::endl ;
     unlink(name);
 
+    std::cout << "WTF: set group and user ownership" << fd << std::endl ;
     // Set the user and group of the socket
     if(owner!=nullptr && group!=nullptr)
     {
@@ -274,6 +277,7 @@ bool Fastcgipp::SocketGroup::listen(
         }
     }
 
+    std::cout << "WTF: Set permissions : " << permissions << std::endl ;
     // Set the user and group of the socket
     if(permissions != 0xffffffffUL)
     {
@@ -287,6 +291,7 @@ bool Fastcgipp::SocketGroup::listen(
         }
     }
 
+    std::cout << "WTF: Start to listen on " << fd << std::endl ;        
     if(::listen(fd, 100) < 0)
     {
         ERROR_LOG("Unable to listen on unix socket :\"" << name << "\": "\
